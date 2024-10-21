@@ -9,28 +9,29 @@ import sys
 from time import sleep
 
 # Definindo os caminhos GPIO
+#LED_PATH = "/sys/class/gpio/gpio16/"
+#LED_PATH21 = "/sys/class/gpio/gpio21/"
+#LED_PATH20 = "/sys/class/gpio/gpio20/"
+
 RED_GPIO = "20"
 GREEN_GPIO = "21"
 YELLOW_GPIO = "16"
 
 SYSFS_DIR = "/sys/class/gpio/"
 
-def writeGPIO(gpio_number, value):
-    "Escreve o valor no arquivo do GPIO"
-    with open(f"{SYSFS_DIR}gpio{gpio_number}/value", "w") as fo:
-        fo.write(value)
+def writeGPIO (gpio_number, value, path = SYSFS_DIR ):
+   with open(f"{SYSFS_DIR}gpio{gpio_number}/value", "w") as fo:
+   fo.write(value)
 
 def setupGPIO(gpio_number):
-    "Configura o GPIO como saída"
-    with open(f"{SYSFS_DIR}export", "w") as fo:
+        with open(f"{SYSFS_DIR}export", "w") as fo:
         fo.write(gpio_number)
     sleep(0.1)  # Aguarda um momento para garantir que o GPIO foi exportado
     with open(f"{SYSFS_DIR}gpio{gpio_number}/direction", "w") as fo:
         fo.write("out")
 
 def closeGPIO(gpio_number):
-    "Desabilita o GPIO"
-    with open(f"{SYSFS_DIR}unexport", "w") as fo:
+        with open(f"{SYSFS_DIR}unexport", "w") as fo:
         fo.write(gpio_number)
 
 # Configurando os GPIOs
