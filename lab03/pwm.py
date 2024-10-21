@@ -8,7 +8,7 @@ from time import sleep
 
 GPIO.setmode(GPIO.BCM)
 pinoPWM=23
-PWM_freq_Hz=200
+PWM_freq_Hz=20000
 
 GPIO.setup(pinoPWM,GPIO.OUT)
 meuPWM=GPIO.PWM(pinoPWM,PWM_freq_Hz)
