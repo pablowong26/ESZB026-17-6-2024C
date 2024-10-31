@@ -14,7 +14,7 @@ int main(int argc, char *argv[]){
        printf("Numero invalido de argumentos. Saindo...\n");
        return -2;
    }
-   if ((file = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_NDELAY))<0){
+   if ((file = open("/dev/ttyACM0", O_RDWR | O_NOCTTY | O_NDELAY))<0){
       perror("Falha ao abrir o arquivo.\n");
       return -1;
    }

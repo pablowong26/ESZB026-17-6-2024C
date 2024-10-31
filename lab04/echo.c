@@ -9,7 +9,7 @@
 
 int main(){
    int file, count;
-   if ((file = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_NDELAY))<0){
+   if ((file = open("/dev/ttyACM0", O_RDWR | O_NOCTTY | O_NDELAY))<0){
       perror("UART: Falha ao abrir o arquivo.\n");
       return -1;
    }
@@ -22,8 +22,8 @@ int main(){
    options.c_iflag = IGNPAR | ICRNL;   // ignora erros de paridade
    tcflush(file, TCIFLUSH);            // descarta informacao no arquivo
    tcsetattr(file, TCSANOW, &options); // aplica alteracoes imediatamente
-   unsigned char transmit[23] = "Testando a comunicacao\0";  // cria uma frase (\0 indica o final da mensagem)
-   if ((count = write(file, &transmit, 23))<0){             // transmite a frase
+   unsigned char transmit[26] = "Testando a comuxxxnicacao\0";  // cria uma frase (\0 indica o final da mensagem)
+   if ((count = write(file, &transmit, 26))<0){             // transmite a frase
       perror("Falha ao escrever na saida\n");
       return -1;
    }
