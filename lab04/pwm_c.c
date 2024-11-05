@@ -1,8 +1,15 @@
 #include <stdio.h>
 #include <wiringPi.h>
-#include <softPwm.h>
+#include <softPwm.h>  
 
 int main(){
+   int file;
+   if ((file = open("/dev/ttyACM0", O_RDWR | O_NOCTTY | O_NDELAY))<0){
+      perror("UART: Falha ao abrir o arquivo.\n");
+      return -1;
+   }
+   struct termios options;             // cria estruturas para configurar a comunicacao
+   tcgetattr(file, &options);          // ajusta os parametros do arquivo
 	int pino_PWM = 23;                         // pwm por software na GPIO23
 	int brilho;
 	int range = 100;                           // periodo do PWM = 100us*range
