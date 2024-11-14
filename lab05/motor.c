@@ -16,7 +16,7 @@ int main() {                            // este programa deve ser rodado com 'su
    pwmSetClock(573); 
    // fornece uma frequencia de 10kHz (max=4096)
    printf("Iniciando...\n");
-   dc = 10;
+   dc = 3;
    
  for(ciclos = 0; ciclos < 2; ciclos++){ 
       pwmWrite(pino_PWM0, dc);
