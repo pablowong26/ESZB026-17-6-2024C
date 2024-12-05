@@ -35,6 +35,10 @@ def update():
         data1[:-1] = data1[1:]  # shift no vetor dados
         data1[-1] = novodado
         curve1.setData(data1)
+
+    else:
+        print(conexaoSerial.inWaiting())
+        conexaoSerial.write(b'i')
         
 # inicia timer rodando o mais rápido possível
 timer = QtCore.QTimer()
