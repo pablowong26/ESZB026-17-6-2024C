@@ -18,12 +18,16 @@ def para_coleta():
 #---------------------Adicionado-------------------------
 def intervalo_coleta():
     conexaoSerial.write(b'g')
+    dado1 = conexaoSerial.read()
+    dado2 = conexaoSerial.read()
+    t = float( (ord(dado1) + ord(dado2)*256.0) )
+    texto1.setText("intervalo: "+str(t).zfill(3)+"ms" )
 
-def intervalo_coleta():
+def aumenta():
     conexaoSerial.write(b'h')
 
-def intervalo_coleta():
-    conexaoSerial.write(b'i')
+def diminui():
+    conexaoSerial.write(b'j')
 
 #------------------------fim-----------------------------
 
@@ -49,7 +53,6 @@ def update():
         taxa = str(round(actualTime-previousTime))
         previousTime = actualTime
         texto.setText("taxa: "+taxa.zfill(3)+"ms" )
-        texto.setText("taxa: "+t.zfill(3)+"ms" )
 
 win = pg.GraphicsWindow()
 win.setWindowTitle('Coletando dados do Arduino via Porta Serial')
@@ -66,6 +69,12 @@ previousTime = time.time()*1000 # pega a hora atual, em milissegundos
 texto = pg.TextItem(text="", color=(255,255,0), anchor=(0,1))
 p1.addItem(texto)
 texto.setPos(0,0) # adiciona o texto na posicao (0,0) do grafico
+
+#---------------------------------onde coloco isso?-----------------------
+texto1 = pg.TextItem(text="", color=(255,255,0), anchor=(0,1))
+p1.addItem(texto1)
+texto1.setPos(650,4) # adiciona o texto na posicao (0,0) do grafico
+#-------------------------------------------------------------------------
 
 proxy1 = QtGui.QGraphicsProxyWidget()
 botao1 = QtGui.QPushButton('Inicia')
@@ -85,39 +94,29 @@ botao3.clicked.connect(intervalo_coleta)
 
 proxy4 = QtGui.QGraphicsProxyWidget()
 botao4 = QtGui.QPushButton('Aumenta')
-proxy4.setWidget(botao3)
-botao4.clicked.connect(intervalo_coleta)
+proxy4.setWidget(botao4)
+botao4.clicked.connect(aumenta)
 
 proxy5 = QtGui.QGraphicsProxyWidget()
 botao5 = QtGui.QPushButton('Diminui')
-proxy5.setWidget(botao3)
-botao5.clicked.connect(intervalo_coleta)
-
+proxy5.setWidget(botao5)
+botao5.clicked.connect(diminui)
 #-------------------FIM-----------------------------
 
-p2 = win.addLayout(row=0, col=0)
-p2.addItem(proxy1,row=0,col=1)
-
+p2 = win.addLayout(row=1, col=0)
+p2.addItem(proxy1,row=1,col=1)
 #-------------------Adicionado----------------------
-p3 = win.addLayout(row=0, col=0)
-p3.addItem(proxy2,row=1,col=0)
-
-p4 = win.addLayout(row=0, col=0)
-p4.addItem(proxy3,row=1,col=1)
-
-p5 = win.addLayout(row=0, col=0)
-p5.addItem(proxy4,row=2,col=1)
-
-p6 = win.addLayout(row=0, col=0)
-p6.addItem(proxy5,row=2,col=0)
-
-#-------------------FIM-----------------------------
+p2.addItem(proxy2,row=2,col=1)
+p2.addItem(proxy3,row=3,col=1)
+p2.addItem(proxy4,row=4,col=1)
+p2.addItem(proxy5,row=5,col=1)
+#-------------------FIM--------------------------------
 
 conexaoSerial = serial.Serial('/dev/ttyACM0',115200)
 conexaoSerial.write(b'i')
 conexaoSerial.write(b'g')
-conexaoSerial.write(b'h')
-conexaoSerial.write(b'u')
+#conexaoSerial.write(b'h')
+#conexaoSerial.write(b'j')
 
 # inicia timer rodando o mais rápido possível
 timer = QtCore.QTimer()

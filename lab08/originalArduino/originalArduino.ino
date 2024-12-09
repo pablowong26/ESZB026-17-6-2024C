@@ -1,7 +1,7 @@
 const int analogInPin = A0;            // o potenciômetro esta ligado ao pino A0
-int iniciaColeta,intervalo_coleta = 0;
+int iniciaColeta,intervalo_coleta, aumenta, diminui = 0;
 long now, antes;
-int t=0;
+int t=0, atraso=100;
 
 char charRecebido;                     // cria uma variavel para armazenar o caractere recebido
 
@@ -22,22 +22,18 @@ void loop(){
              iniciaColeta = 0;
              break;
 
-
           case 'g':                    // para a intervalo
-             Serial.write(t);
-             intervalo_coleta = 1;
+             Serial.write(t & 0xFF);          // envia byte menos significativo
+             Serial.write(t >> 8);            // envia byte mais significativo
              break;
 
           case 'h':                    // para a intervalo
-             Serial.write(t);
-             intervalo_coleta = 1;
+             atraso += 10;
              break;
 
-          case 'u':                    // para a intervalo
-             Serial.write(t);
-             intervalo_coleta = 1;
+          case 'j':                    // para a intervalo
+             atraso -= 10;
              break;
-
 
           default:                     // outro comando, ignora...
              break;
@@ -50,7 +46,7 @@ void loop(){
        antes = now;
        Serial.write(valor & 0xFF);          // envia byte menos significativo
        Serial.write(valor >> 8);            // envia byte mais significativo
-
    }
-   delay(100);                          // aguarda 100ms
+
+   delay(atraso);                          // aguarda 100ms
 }
