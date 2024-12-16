@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ARQUIVODADOS=/home/pi/ESZB026-17-6-2024C/Projeto/muleta_dados.txt
+ARQUIVODADOS=/home/pi/muleta_dados.txt
 echo "Content-type: text/html"
 echo ""
 echo '<HTML><HEAD><meta charset="UTF-8">'
@@ -13,6 +13,12 @@ whoami
 echo '.<br>'
 echo '<h2>DADOS:</h2>'
 echo '<pre>'
+arquivo="/home/pi/ESZB026-17-6-2024C/Projeto/muleta_dados.txt"
+min=$(awk 'NR == 1 || $1 < min {min = $1} END {print min}' "$arquivo")
+max=$(awk 'NR == 1 || $1 > max {max = $1} END {print max}' "$arquivo")
+echo "Valor mínimo: $min"
+echo "Valor máximo: $max"
+echo '</pre>'
 cat $ARQUIVODADOS
 echo '</pre>'
 echo '<br>'

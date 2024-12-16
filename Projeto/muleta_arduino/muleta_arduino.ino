@@ -1,6 +1,6 @@
 #include <SPI.h>
 
-#define NRO_MEDIDAS 900
+#define NRO_MEDIDAS 700
 
 //////////////////////////////////////////////////////////////////////////////////
 // Define variaveis globais
@@ -61,7 +61,7 @@ void loop (void)
       // A funcao AnalogRead() demora 100 microssegundos para ser executada,
       // o que possibilita ate 10.000 amostras/segundo com essa abordagem
       vetor_medidas[i] = analogRead(PinoPonte); // le dado com ADC de 10-bit
-      delayMicroseconds(900);     // atraso adicional para 1.000 medidas por segundo
+      delayMicroseconds(100);     // atraso adicional para 1.000 medidas por segundo
     }
     inicia_coleta = 0;
   }
