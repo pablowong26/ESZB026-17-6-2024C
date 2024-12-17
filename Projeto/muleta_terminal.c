@@ -12,7 +12,7 @@
 #include <stdio.h>            // para printf()
 #include <string.h>           // para memset()
 
-#define NRO_MEDIDAS 900
+#define NRO_MEDIDAS 700
 
 /******************************************************************
  * Declaracao das variaveis globais
@@ -80,11 +80,13 @@ int main (void)
 		   fprintf(fp_saida,"%f %f\n", i/1000.0, vetor_medidas[i]*5.0/1023.0);
 	   }
 	   fclose(fp_saida);
+
    }
    else {
 	   printf("Nao foi possivel ler os dados do barramento SPI.\n");
 	   return 1;
    }
+   
 
    return 0;
 }

@@ -4,8 +4,10 @@
 
 //////////////////////////////////////////////////////////////////////////////////
 // Define variaveis globais
-const int PinoPonte = A0;       // pino analogico ligado ao ponte.
+const int PinoPonte = A0;
+const int led = 9;// pino digital.
 int vetor_medidas[NRO_MEDIDAS];
+int vetor_alarme[NRO_MEDIDAS];
 unsigned char inicia_coleta = 0;
 int contador = 0;                       // nro de bytes enviados
 
@@ -13,7 +15,8 @@ int contador = 0;                       // nro de bytes enviados
 void setup (void)
 {
     SPI.setDataMode(SPI_MODE0); // configura SPI em modo 0
-    pinMode(MISO, OUTPUT);      // define o pino MISO como saida, ja que o Arduino eh escravo
+    pinMode(MISO, OUTPUT); 
+    pinMode(led, OUTPUT); // define o pino MISO como saida, ja que o Arduino eh escravo
     SPCR |= bit (SPE);          // habilita o barramento SPI
     SPI.attachInterrupt();      // liga interrupcao para SPI
 }
@@ -61,6 +64,13 @@ void loop (void)
       // A funcao AnalogRead() demora 100 microssegundos para ser executada,
       // o que possibilita ate 10.000 amostras/segundo com essa abordagem
       vetor_medidas[i] = analogRead(PinoPonte); // le dado com ADC de 10-bit
+      vetor_alarme[i] = vetor_medidas[i]*5.0/1023.0; 
+         if (vetor_alarme[i] > 4) {
+          digitalWrite(led, HIGH);
+         }else{
+          digitalWrite(led, LOW);
+         }
+ 
       delayMicroseconds(100);     // atraso adicional para 1.000 medidas por segundo
     }
     inicia_coleta = 0;
